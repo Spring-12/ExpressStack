@@ -30,8 +30,8 @@
     <!-- 4、配置内部资源视图解析器  -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- 设置前、后缀-->
-        <property name = "prefix" value="/pages/"/>
-        <property name = "suffix" value=".jsp"/>
+        <property name = "prefix" value="/admin/views/"/>
+        <property name = "suffix" value=".html"/>
     </bean>
 
 
