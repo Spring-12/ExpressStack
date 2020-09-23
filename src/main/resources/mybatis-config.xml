@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--  1、数据源和sql映射等的管理都交给了Spring，在这个配置文件中只需要配置一些设置和插件就可以了  -->
+    <settings>
+        <setting name = "mapUnderscoreToCamelCase" value = "true"/>
+    </settings>
+    <!--  2、为所有类起一个默认别名  -->
+    <typeAliases>
+        <package name = "com.lcl.domain"/>
+    </typeAliases>
+
+    <!--  3、分页插件配置  -->
+    <plugins>
+        <plugin interceptor = "com.github.pagehelper.PageInterceptor">
+            <property name = "reasonable" value = "true"/>
+        </plugin>
+    </plugins>
+</configuration>

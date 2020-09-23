@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns = "http://www.springframework.org/schema/beans"
+        xmlns:context = "http://www.springframework.org/schema/context"
+        xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:aop = "http://www.springframework.org/schema/aop"
+        xmlns:tx = "http://www.springframework.org/schema/tx"
+        xmlns:p = "http://www.springframework.org/schema/p"
+        xsi:schemaLocation = "
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--  1、扫描注解  -->
+    <context:component-scan base-package = "com.lcl" >
+        <!-- 排除扫描controller，它由springMVC来扫描-->
+        <context:exclude-filter type = "annotation" expression = "org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 2、数据源的配置 -->
+    <!--  加载配置文件  -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <!--  配置数据源  -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name = "driverClass" value="${jdbc.driver}"/>
+        <property name = "jdbcUrl" value="${jdbc.url}"/>
+        <property name = "user" value="${jdbc.username}"/>
+        <property name = "password" value="${jdbc.password}"/>
+    </bean>
+
+    <!-- 3、整合mybatis的配置 -->
+    <!--  配置SqlSessionFactory工厂  -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 注入数据源  -->
+        <property name = "dataSource" ref="dataSource"/>
+        <!--  加载mybatis的核心配置文件和sql映射文件-->
+        <property name = "configLocation" value="classpath:mybatis-config.xml"/>
+        <property name = "mapperLocations" value="classpath:com/lcl/mapper/**/*.xml"/>
+    </bean>
+
+    <!--  4、扫描mapper包，即为mapper接口创建代理对象  -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name = "basePackage" value="com.lcl.mapper"/>
+    </bean>
+
+    <!-- 5、配置事务管理  -->
+
+</beans>
