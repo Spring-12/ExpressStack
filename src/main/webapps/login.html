@@ -25,11 +25,37 @@
                     <span class="label-title">密码</span>
                 </label>
             </div>
-            <button type="submit" class="login-button">登录<i class="ai ai-enter"></i></button>
+            <button type="button" class="login-button">登录<i class="ai ai-enter"></i></button>
         </form>
     </div>
 </body>
 <script src="assets/layui.js"></script>
-<script src="admin/jsdex.js" data-main="login"></script>
+<script src="js/index.js" data-main="login"></script>
 <script src="js/login.js" data-main="login"></script>
+<script src="js/jquery2.1.4.js"></script>
+<script src="layer/layer.js"></script>
+<script>
+    $(function () {
+        $(".login-button").click(function () {
+            //获取参数
+            let userName = $("#username").val();
+            let password = $("#password").val();
+            //1、使用layer弹出加载提示框
+            let loadId = layer.load();//窗口id，便于后面关闭窗口
+            //2、ajax与服务器交互
+            $.post("admin/login",{userName:userName,password:password},function (data) {
+                //3、关闭加载框
+                layer.close(loadId);
+                //4、显示返回结果
+                layer.msg(data.result);
+                if (data.status === 0){
+                    //跳转到主页
+                    location.assign("index.html");
+
+                }
+            },"JSON");//参数：请求地址、请求参数（一个对象）、响应成功后的执行函数、返回的数据格式
+
+        });
+    });
+</script>
 </html>

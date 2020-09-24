@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace = "com.lcl.mapper.AdminMapper">
+    <!--    ExpressStack_war_exploded-->
+    <!-- Admin login(Admin admin); -->
+    <select id="login" resultType="admin">
+        select * from admin where user_name = #{userName} and password = #{password}
+    </select>
+
+    <update id="updateTimeIp">
+        update admin set login_time = #{loginTime},login_ip = #{loginIp} where id = #{id}
+    </update>
+</mapper>
+    

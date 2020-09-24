@@ -3,6 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+    <welcome-file-list>
+        <welcome-file>login.html</welcome-file>
+    </welcome-file-list>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -23,6 +26,11 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!--  如果需要在Spring中使用HttPServletRequest需要配置此项  -->
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+
     <!--  2、Spring的监听器，加载ApplicationContext对象，需要全局的初始化参数  -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -42,5 +50,7 @@
         <servlet-name>DispatcherServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+
 
 </web-app>
