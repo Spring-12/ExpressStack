@@ -4,7 +4,7 @@
 <mapper namespace = "com.lcl.mapper.AdminMapper">
     <!--    ExpressStack_war_exploded-->
     <!-- Admin login(Admin admin); -->
-    <select id="login" resultType="admin">
+    <select id="login" resultType="com.lcl.domain.Admin">
         select * from admin where user_name = #{userName} and password = #{password}
     </select>
 

@@ -43,15 +43,14 @@
             //1、使用layer弹出加载提示框
             let loadId = layer.load();//窗口id，便于后面关闭窗口
             //2、ajax与服务器交互
-            $.post("admin/login",{userName:userName,password:password},function (data) {
+            $.post("/admin/login",{userName:userName,password:password},function (data) {
                 //3、关闭加载框
                 layer.close(loadId);
                 //4、显示返回结果
                 layer.msg(data.result);
-                if (data.status === 0){
+                if (data.status == 0){
                     //跳转到主页
                     location.assign("index.html");
-
                 }
             },"JSON");//参数：请求地址、请求参数（一个对象）、响应成功后的执行函数、返回的数据格式
 
