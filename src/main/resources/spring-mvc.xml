@@ -34,5 +34,4 @@
         <property name = "suffix" value=".html"/>
     </bean>
 
-
 </beans>
