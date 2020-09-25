@@ -6,7 +6,6 @@ import com.lcl.service.AdminService;
 import com.lcl.utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,7 +23,7 @@ public class AdminController {
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public String login(Admin admin, @RequestBody HttpServletRequest request) {
+    public String login(Admin admin, HttpServletRequest request) {
         Admin adm = adminService.login(admin);
         Message message = null;
         if (adm != null) {

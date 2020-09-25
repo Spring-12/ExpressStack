@@ -2,6 +2,7 @@ package com.lcl.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.lcl.domain.Console;
 import com.lcl.domain.Express;
 import com.lcl.result.Message;
 import com.lcl.service.ExpressService;
@@ -33,8 +34,56 @@ public class ExpressController {
         return JSONUtil.toJSON(message);
     }
 
-    public void insert() {
-       
+    @RequestMapping("/insert")
+    public void insert(Express express) {
+        expressService.insertExpress(express);
+
+
     }
+
+    @RequestMapping(value = {"/console"})
+    public String console() {
+        List<Console> consoles = expressService.console();
+        return null;
+    }
+
+    @RequestMapping("/getExpressBySno")
+    public String getExpressBySno(String exprSno) {
+        Express expressBySno = expressService.getExpressBySno(exprSno);
+
+        return null;
+    }
+
+    @RequestMapping("/getExpressByPhone")
+    public String getExpressByPhone(String userPhone) {
+        List<Express> expressByPhone = expressService.getExpressByPhone(userPhone);
+
+        return null;
+    }
+
+    @RequestMapping("/getExpressByCode")
+    public String getExpressByCode(String code) {
+        Express expressByCode = expressService.getExpressByCode(code);
+        return null;
+    }
+
+    @RequestMapping("/getExpressBySysPhone")
+    public String getExpressBySysPhone(String sysPhone) {
+        List<Express> expressBySysPhone = expressService.getExpressBySysPhone(sysPhone);
+
+        return null;
+    }
+
+    @RequestMapping("/update")
+    public void updateExpress(Integer id,Express express) {
+        expressService.updateExpress(id,express);
+
+    }
+
+    public void deleteExpress(Integer id) {
+        expressService.deleteExpress(id);
+
+    }
+
 
 }
