@@ -9,12 +9,20 @@
     </select>
 
     <!--  List<Console> console();  -->
-    <resultMap id="data" type="com.lcl.domain.Console">
-
+    <resultMap id = "console" type = "com.lcl.domain.Console">
+        <result property="expressTotal" column="expressTotal"/>
+        <result property="expressIncrease" column="expressIncrease"/>
+        <result property="uncollectedExpress" column="uncollectedExpress"/>
+        <result property="uncollectedIncrease" column="uncollectedIncrease"/>
     </resultMap>
-    <select id="console" resultMap="data">
-
+    <select id="console" resultMap="console">
+        select count(id) as expressTotal,
+               count(TO_DAYS(in_time)=TO_DAYS(NOW()) or null) as expressIncrease,
+               count(expr_status=0 or null) as uncollectedExpress,
+               count(TO_DAYS(in_time)=TO_DAYS(now()) and expr_status=0) as uncollectedIncrease
+        from express
     </select>
+
     <!--  Express getExpressBySno(String exprSno);  -->
     <select id="getExpressBySno" resultType="com.lcl.domain.Express">
         select * from express where expr_sno = #{exprSno}
