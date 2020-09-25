@@ -8,5 +8,47 @@
         select * from express
     </select>
 
+    <!--  List<Console> console();  -->
+    <resultMap id="data" type="com.lcl.domain.Console">
+
+    </resultMap>
+    <select id="console" resultMap="data">
+
+    </select>
+    <!--  Express getExpressBySno(String exprSno);  -->
+    <select id="getExpressBySno" resultType="com.lcl.domain.Express">
+        select * from express where expr_sno = #{exprSno}
+    </select>
+
+    <!--  List<Express> getExpressByPhone(String userPhone);  -->
+    <select id="getExpressByPhone" resultType="Express">
+        select * from express where user_phone = #{userPhone}
+    </select>
+
+    <!--  Express getExpressByCode(String code);  -->
+    <select id="getExpressByCode" resultType="Express">
+        select * from express where code = #{code}
+    </select>
+
+    <!--  List<Express> getExpressBySysPhone(String sysPhone);  -->
+    <select id="getExpressBySysPhone" resultType="Express">
+        select * from express where sys_phone = #{sysPhone}
+    </select>
+
+    <!--  Integer insertExpress(Express express);  -->
+    <insert id="insertExpress">
+        insert into express values(null,#{exprSno},0,#{userName},#{userPhone},#{company},#{code},#{inTime},#{outTime},#{sysPhone})
+    </insert>
+
+    <!--  void updateExpress(Integer id, Express express);  -->
+    <update id="updateExpress">
+
+    </update>
+
+    <!--  void deleteExpress(Integer id);  -->
+    <delete id="deleteExpress">
+
+    </delete>
+
 </mapper>
     
