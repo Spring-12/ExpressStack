@@ -31,7 +31,7 @@ public class ExpressServiceImpl implements ExpressService {
      * @return
      */
     @Override
-    public List<Console> console() {
+    public Console console() {
         return expressMapper.console();
     }
 

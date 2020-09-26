@@ -20,7 +20,7 @@ public interface ExpressService {
      *
      * @return
      */
-    List<Console> console();
+    Console console();
 
     /**
      * 根据快递单号查询快递

@@ -24,9 +24,9 @@ public class ExpressController {
     @Autowired
     private ExpressService expressService;
 
-    @RequestMapping(value = {"/findAll/{page}/{size}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/findAll"}, method = RequestMethod.POST)
     @ResponseBody
-    public String findAll(@PathVariable("page") Integer page, @PathVariable("size") Integer size) {
+    public String findAll(Integer page, Integer size) {
         List<Express> lists = expressService.findAll(page, size);
         //封装了当前页数据，当前页号，总页号，上一页，下一页等信息
         PageInfo<Express> pageInfo = new PageInfo<>(lists);
@@ -37,14 +37,15 @@ public class ExpressController {
     @RequestMapping("/insert")
     public void insert(Express express) {
         expressService.insertExpress(express);
-
-
     }
 
     @RequestMapping(value = {"/console"})
+    @ResponseBody
     public String console() {
-        List<Console> consoles = expressService.console();
-        return null;
+        Console console = expressService.console();
+        Message message = new Message(0);
+        message.setData(console);
+        return JSONUtil.toJSON(message);
     }
 
     @RequestMapping("/getExpressBySno")

@@ -7,6 +7,7 @@ public class Express {
     private Integer id;
     private String exprSno;
     private Integer exprStatus;
+    private String statusView;
     private String userName;
     private String userPhone;
     private String company;
@@ -15,11 +16,12 @@ public class Express {
     private Date outTime;
     private String sysPhone;
 
-    public Express(Integer id, String exprSno, Integer exprStatus, String userName, String userPhone,
-                   String company, String code, Date inTime, Date outTime, String sysPhone) {
+    public Express(Integer id, String exprSno, Integer exprStatus, String statusView, String userName, String userPhone, String company,
+                   String code, Date inTime, Date outTime, String sysPhone) {
         this.id = id;
         this.exprSno = exprSno;
         this.exprStatus = exprStatus;
+        this.statusView = statusView;
         this.userName = userName;
         this.userPhone = userPhone;
         this.company = company;
@@ -30,7 +32,7 @@ public class Express {
     }
 
     public Express(String exprSno, String userName, String userPhone,
-                   String company,String sysPhone) {
+                   String company, String sysPhone) {
         this.exprSno = exprSno;
         this.userName = userName;
         this.userPhone = userPhone;
@@ -100,7 +102,27 @@ public class Express {
     }
 
     public void setExprStatus(Integer exprStatus) {
+        if (statusView.equals("未签收"))
+            exprStatus = 0;
+        if (statusView.equals("已签收"))
+            exprStatus = 1;
+        if (statusView.equals("拒签"))
+            exprStatus = 2;
         this.exprStatus = exprStatus;
+    }
+
+    public String getStatusView() {
+        if (exprStatus==0)
+            statusView = "未签收";
+        if (exprStatus == 1)
+            statusView = "已签收";
+        if (exprStatus == 2)
+            statusView = "拒签";
+        return statusView;
+    }
+
+    public void setStatusView(String statusView) {
+        this.statusView = statusView;
     }
 
     public String getUserName() {

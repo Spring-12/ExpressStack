@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>原生js分页插件</title>
+		<link rel="stylesheet" type="text/css" href="./css/index.css" />
+		<script src="./js/index.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id='test'></div>
+		<script type="text/javascript">
+			var nums = 400, // 总数
+				counts = 10; // 每页个数
+			var p = new Page({
+				el: '#test',
+				nums: nums,
+				counts: counts,
+				defaultPage: 1,
+				defaultPage: 1,
+				showHeadFoot: !false, // 显示首页尾页
+				jumpToOrder: true,  // 跳转到指定页
+				showNowAndAll: true, // 当前页/共几页
+				clickEvent: function(currectPage) {
+					// alert('点击了第' + currectPage + "页");
+					// console.log('点击了第' + currectPage + "页");
+				}
+			});
+			console.log(p)
+		</script>
+	</body>
+</html>
