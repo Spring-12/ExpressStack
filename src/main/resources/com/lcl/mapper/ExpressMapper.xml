@@ -4,59 +4,82 @@
 <mapper namespace = "com.lcl.mapper.ExpressMapper">
 
     <!-- List<Express> findAll(); -->
-    <select id = "findAll" resultType="com.lcl.domain.Express">
-        select * from express
+    <select id = "findAll" resultType = "com.lcl.domain.Express">
+        select *
+        from express
     </select>
 
     <!--  List<Console> console();  -->
     <resultMap id = "console" type = "com.lcl.domain.Console">
-        <result property="expressTotal" column="expressTotal"/>
-        <result property="expressIncrease" column="expressIncrease"/>
-        <result property="uncollectedExpress" column="uncollectedExpress"/>
-        <result property="uncollectedIncrease" column="uncollectedIncrease"/>
+        <result property = "expressTotal" column = "expressTotal"/>
+        <result property = "expressIncrease" column = "expressIncrease"/>
+        <result property = "uncollectedExpress" column = "uncollectedExpress"/>
+        <result property = "uncollectedIncrease" column = "uncollectedIncrease"/>
     </resultMap>
-    <select id="console" resultMap="console">
-        select count(id) as expressTotal,
-               count(TO_DAYS(in_time)=TO_DAYS(NOW()) or null) as expressIncrease,
-               count(expr_status=0 or null) as uncollectedExpress,
-               count(TO_DAYS(in_time)=TO_DAYS(now()) and expr_status=0) as uncollectedIncrease
+    <select id = "console" resultMap = "console">
+        select count(id)                                                    as expressTotal,
+               count(TO_DAYS(in_time) = TO_DAYS(NOW()) or null)             as expressIncrease,
+               count(expr_status = 0 or null)                               as uncollectedExpress,
+               count(TO_DAYS(in_time) = TO_DAYS(now()) and expr_status = 0) as uncollectedIncrease
         from express
     </select>
 
     <!--  Express getExpressBySno(String exprSno);  -->
-    <select id="getExpressBySno" resultType="com.lcl.domain.Express">
-        select * from express where expr_sno = #{exprSno}
+    <select id = "getExpressBySno" resultType = "com.lcl.domain.Express">
+        select *
+        from express
+        where expr_sno = #{exprSno}
     </select>
 
     <!--  List<Express> getExpressByPhone(String userPhone);  -->
-    <select id="getExpressByPhone" resultType="Express">
-        select * from express where user_phone = #{userPhone}
+    <select id = "getExpressByPhone" resultType = "Express">
+        select *
+        from express
+        where user_phone = #{userPhone}
     </select>
 
     <!--  Express getExpressByCode(String code);  -->
-    <select id="getExpressByCode" resultType="Express">
-        select * from express where code = #{code}
+    <select id = "getExpressByCode" resultType = "Express">
+        select *
+        from express
+        where code = #{code}
     </select>
 
     <!--  List<Express> getExpressBySysPhone(String sysPhone);  -->
-    <select id="getExpressBySysPhone" resultType="Express">
-        select * from express where sys_phone = #{sysPhone}
+    <select id = "getExpressBySysPhone" resultType = "Express">
+        select *
+        from express
+        where sys_phone = #{sysPhone}
     </select>
 
     <!--  Integer insertExpress(Express express);  -->
-    <insert id="insertExpress">
-        insert into express values(null,#{exprSno},0,#{userName},#{userPhone},#{company},#{code},#{inTime},#{outTime},#{sysPhone})
+    <insert id = "insertExpress">
+        insert into express
+        values (null, #{exprSno}, 0, #{userName}, #{userPhone}, #{company}, #{code}, #{inTime}, #{outTime}, #{sysPhone})
     </insert>
 
     <!--  void updateExpress(Integer id, Express express);  -->
-    <update id="updateExpress">
-
+    <update id = "updateExpress">
+        update express
+        set expr_sno   = #{exprSno},
+            company=#{company},
+            user_name=#{userName},
+            user_phone=#{userPhone},
+            expr_status=#{exprStatus}
+        where id = #{id}
     </update>
 
     <!--  void deleteExpress(Integer id);  -->
-    <delete id="deleteExpress">
+    <delete id = "deleteExpress">
 
     </delete>
+
+    <!--  Express getExpressById(Integer id)  -->
+    <select id = "getExpressById" resultType = "Express">
+        select *
+        from express
+        where id = #{id}
+    </select>
 
 </mapper>
     

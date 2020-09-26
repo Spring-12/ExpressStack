@@ -5,9 +5,12 @@ import com.lcl.domain.Console;
 import com.lcl.domain.Express;
 import com.lcl.mapper.ExpressMapper;
 import com.lcl.service.ExpressService;
+import com.lcl.utils.CodeUtil;
+import com.lcl.utils.SMSUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -84,6 +87,17 @@ public class ExpressServiceImpl implements ExpressService {
      */
     @Override
     public Integer insertExpress(Express express) {
+        //插入快递时生成取件码和快递入栈时间
+        String code = CodeUtil.createCode();
+        Date inTime = new Date();
+        //生成的取件码不能与栈内的快递重复，重复需要再次生成
+        if (getExpressByCode(code) == null) {
+            express.setCode(code);
+            express.setInTime(inTime);
+        } else
+            insertExpress(express);
+        //入栈完成需要给收件人发送验证码
+        SMSUtil.send(express.getUserPhone(), code);
         return expressMapper.insertExpress(express);
     }
 
@@ -95,7 +109,21 @@ public class ExpressServiceImpl implements ExpressService {
      */
     @Override
     public void updateExpress(Integer id, Express express) {
+        Express expressById = expressMapper.getExpressById(id);
         expressMapper.updateExpress(id, express);
+        //如果手机号修改需要发送新的取件码
+        if (!expressById.getUserPhone().equals(express.getUserPhone()) && express.getExprStatus() == 0) {
+            String code = null;
+            while (true){
+                 code = CodeUtil.createCode();
+                Express expressByCode = getExpressByCode(code);
+                if (expressByCode==null)
+                    break;
+            }
+            //发送取件码
+            SMSUtil.send(express.getUserPhone(),code);
+        }
+
     }
 
     /**

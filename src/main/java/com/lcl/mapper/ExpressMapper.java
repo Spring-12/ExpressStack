@@ -2,6 +2,7 @@ package com.lcl.mapper;
 
 import com.lcl.domain.Console;
 import com.lcl.domain.Express;
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 
 import java.util.List;
@@ -64,7 +65,7 @@ public interface ExpressMapper {
      * @param id ：要修改快递的id
      * @param express ：新的快递信息
      */
-    void updateExpress(Integer id, Express express);
+    void updateExpress(@Param("id") Integer id, @Param("express") Express express);
 
     /**
      * 删除快递，实际上是修改快递的状态信息
@@ -72,4 +73,6 @@ public interface ExpressMapper {
      * @param id
      */
     void deleteExpress(Integer id);
+
+    Express getExpressById(Integer id);
 }
