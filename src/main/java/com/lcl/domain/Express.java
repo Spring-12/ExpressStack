@@ -1,5 +1,7 @@
 package com.lcl.domain;
 
+import com.lcl.utils.DateFormatUtil;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -13,7 +15,9 @@ public class Express {
     private String company;
     private String code;
     private Date inTime;
+    private String inTimeStr;
     private Date outTime;
+    private String outTimeStr;
     private String sysPhone;
 
     public Express(Integer id, String exprSno, Integer exprStatus, String statusView, String userName, String userPhone, String company,
@@ -112,7 +116,7 @@ public class Express {
     }
 
     public String getStatusView() {
-        if (exprStatus==0)
+        if (exprStatus == 0)
             statusView = "未签收";
         if (exprStatus == 1)
             statusView = "已签收";
@@ -171,6 +175,23 @@ public class Express {
 
     public void setOutTime(Date outTime) {
         this.outTime = outTime;
+    }
+
+    public String getInTimeStr() {
+        return inTimeStr;
+    }
+
+    public void setInTimeStr() {
+        this.inTimeStr = DateFormatUtil.dateFormat(inTime);
+    }
+
+    public String getOutTimeStr() {
+        return outTimeStr;
+    }
+
+    public void setOutTimeStr() {
+        if (outTime!=null)
+            this.outTimeStr = DateFormatUtil.dateFormat(outTime);
     }
 
     public String getSysPhone() {

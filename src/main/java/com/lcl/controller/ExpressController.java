@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.lcl.domain.Console;
 import com.lcl.domain.Express;
+import com.lcl.domain.PageData;
 import com.lcl.result.Message;
 import com.lcl.service.ExpressService;
 import com.lcl.utils.JSONUtil;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,13 +26,19 @@ public class ExpressController {
     @Autowired
     private ExpressService expressService;
 
-    @RequestMapping(value = {"/findAll"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/findAll"}, method = RequestMethod.GET)
     @ResponseBody
-    public String findAll(Integer page, Integer size) {
+    public String findAll(HttpServletRequest request) {
+        Integer page = Integer.parseInt(request.getParameter("page"));
+        Integer size = Integer.parseInt(request.getParameter("size"));
         List<Express> lists = expressService.findAll(page, size);
         //封装了当前页数据，当前页号，总页号，上一页，下一页等信息
         PageInfo<Express> pageInfo = new PageInfo<>(lists);
-        Message message = new Message(0, "查询成功", pageInfo);
+        //匹配前端分页组件
+        PageData<Express> pageList = new PageData<>();
+        pageList.setPageData(pageInfo.getList());
+        pageList.setTotal((int) pageInfo.getTotal());
+        Message message = new Message(0, "查询成功", pageList);
         return JSONUtil.toJSON(message);
     }
 
