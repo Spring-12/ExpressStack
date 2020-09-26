@@ -49,38 +49,77 @@ public class ExpressController {
     }
 
     @RequestMapping("/getExpressBySno")
+    @ResponseBody
     public String getExpressBySno(String exprSno) {
         Express expressBySno = expressService.getExpressBySno(exprSno);
-
-        return null;
+        Message message = new Message();
+        if (expressBySno == null) {
+            message.setStatus(-1);
+            message.setResult("没有订单号为：" + exprSno + ",的订单");
+        } else {
+            message.setStatus(0);
+            message.setResult("查询成功");
+            message.setData(expressBySno);
+        }
+        return JSONUtil.toJSON(message);
     }
 
     @RequestMapping("/getExpressByPhone")
+    @ResponseBody
     public String getExpressByPhone(String userPhone) {
         List<Express> expressByPhone = expressService.getExpressByPhone(userPhone);
-
-        return null;
+        Message message = new Message();
+        if (expressByPhone == null || expressByPhone.size() == 0) {
+            message.setStatus(-1);
+            message.setResult("该手机号没有快递");
+        } else {
+            message.setStatus(0);
+            message.setResult("查询成功");
+            message.setData(expressByPhone);
+        }
+        return JSONUtil.toJSON(message);
     }
 
     @RequestMapping("/getExpressByCode")
+    @ResponseBody
     public String getExpressByCode(String code) {
         Express expressByCode = expressService.getExpressByCode(code);
-        return null;
+        Message message = new Message();
+        if (expressByCode == null) {
+            message.setStatus(-1);
+            message.setResult("查询不到结果");
+        } else {
+            message.setStatus(0);
+            message.setResult("查询成功");
+            message.setData(expressByCode);
+        }
+        return JSONUtil.toJSON(message);
     }
 
     @RequestMapping("/getExpressBySysPhone")
+    @ResponseBody
     public String getExpressBySysPhone(String sysPhone) {
         List<Express> expressBySysPhone = expressService.getExpressBySysPhone(sysPhone);
-
-        return null;
+        Message message = new Message();
+        if (expressBySysPhone == null || expressBySysPhone.size() == 0) {
+            message.setStatus(-1);
+            message.setResult("该快递员暂时还未录入快递");
+        } else {
+            message.setStatus(0);
+            message.setData(expressBySysPhone);
+        }
+        return JSONUtil.toJSON(message);
     }
 
     @RequestMapping("/update")
-    public void updateExpress(Integer id,Express express) {
-        expressService.updateExpress(id,express);
-
+    @ResponseBody
+    public String updateExpress(Integer id, Express express) {
+        expressService.updateExpress(id, express);
+        Message message = new Message(0,"删除成功");
+        return JSONUtil.toJSON(message);
     }
 
+    @RequestMapping("/delete")
     public void deleteExpress(Integer id) {
         expressService.deleteExpress(id);
 
